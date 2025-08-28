@@ -39,6 +39,11 @@ pub struct Persistent<T> {
     pub(crate) value: T,
 }
 
+#[cfg(feature = "parallel")]
+unsafe impl<T> Send for Persistent<T> {}
+#[cfg(feature = "parallel")]
+unsafe impl<T> Sync for Persistent<T> {}
+
 impl<T: Clone> Clone for Persistent<T> {
     fn clone(&self) -> Self {
         Persistent {
